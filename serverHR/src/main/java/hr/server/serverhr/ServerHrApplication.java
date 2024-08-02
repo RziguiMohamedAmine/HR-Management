@@ -1,13 +1,13 @@
-package hr.manage.hrmanagement;
+package hr.server.serverhr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HrManagementApplication {
+public class ServerHrApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(HrManagementApplication.class, args);
+        SpringApplication.run(ServerHrApplication.class, args);
     }
 
 }
