@@ -1,11 +1,22 @@
 package hr.server.serverhr.entities;
 
-import jakarta.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.*;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
-
-public class Employee {
+@Entity
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -15,11 +26,11 @@ public class Employee {
     private String mobile;
     @Enumerated(EnumType.STRING)
     private Role role ;
-    @Temporal(TemporalType.DATE)
-    private Date date_entrée;
-    @Temporal(TemporalType.DATE)
-    private Date date_sortie;
     private String email;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="employee")
+    @JsonIgnore
+    private Set<Présence> présences;
 
 
 }
