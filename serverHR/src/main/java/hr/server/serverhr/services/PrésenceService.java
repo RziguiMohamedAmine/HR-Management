@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +29,14 @@ public class PrésenceService implements IPrésenceService{
 
     @Override
     public Présence ajouterPrésence(Présence présence) {
+
+        Duration duration = Duration.between(présence.getArrivalTime(), présence.getDepartureTime());
+        duration = duration.minusHours(1);
+        long hours = duration.toHours();
+        long minutes = duration.toMinutes() % 60;
+        présence.setTotalTimeWorked(String.format("%02d:%02d", hours, minutes));
+        System.out.println(présence.getTotalTimeWorked());
+
         return présenceRepository.save(présence);
     }
 

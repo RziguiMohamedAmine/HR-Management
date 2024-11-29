@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/Employee")
+@RequestMapping("/HrMangement/Employee")
 public class EmployeeController {
     @Autowired
     IEmployeeService employeeService;

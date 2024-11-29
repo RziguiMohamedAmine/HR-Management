@@ -25,7 +25,7 @@ public class Employee implements Serializable {
     private String prenom;
     private String mobile;
     @Enumerated(EnumType.STRING)
-    private Role role ;
+    private Fonction fonction ;
     private String email;
 
     private float soldecongé;

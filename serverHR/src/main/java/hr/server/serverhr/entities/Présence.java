@@ -22,11 +22,13 @@ public class Présence implements Serializable {
 
 
     private LocalDateTime arrivalTime;
-
     private LocalDateTime departureTime;
+    private String totalTimeWorked;
 
     @Temporal(TemporalType.DATE)
     private Date day;
+
+
     @ManyToOne
     Employee employee;
 

@@ -23,7 +23,7 @@ public class Conge implements Serializable {
     private Date dateFinConge;
 
     private boolean validé;
-
+    private Motif motif ;
     @ManyToOne
     Employee employee;
 

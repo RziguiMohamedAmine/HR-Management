@@ -22,10 +22,16 @@ public class CongeController {
         return congeService.DemanderConge(conge);
     }
 
-    @PutMapping("/modifierCongé")
-    Conge modifierConger(@RequestBody Conge conge){
-        return congeService.UpdateConge(conge);
+    @PutMapping("/approuverConge")
+    boolean approuverConge(@RequestBody Conge conge){
+        return congeService.approuverConge(conge);
     }
+
+    @PutMapping("/refuserConge")
+    boolean refuserConge(@RequestBody Conge conge){
+        return congeService.refuserConge(conge);
+    }
+
 
     @GetMapping("/getCongé/{id}")
     List<Conge> retrieveHistoriqueCongé(@PathVariable int id){
