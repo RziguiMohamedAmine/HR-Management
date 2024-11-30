@@ -12,4 +12,5 @@ public interface IPrésenceService {
     List<Présence> retrieveAllPrésence(int id);
     List<Présence> getAllDayPresence(String date);
     void DeletePresence(int id);
+    void updateSalaryWithExtraHoursBonus(int employeeId);
 }

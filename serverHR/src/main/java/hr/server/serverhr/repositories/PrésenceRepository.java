@@ -13,4 +13,6 @@ public interface PrésenceRepository extends JpaRepository<Présence,Integer> {
     List<Présence> findAllByEmployee(Optional<Employee> employee);
     List<Présence> findAllByDay(Date date);
 
+    List<Présence> findByEmployeeIdEmployee(int IdEmployee);
+
 }

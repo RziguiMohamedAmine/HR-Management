@@ -28,8 +28,26 @@ public class Présence implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date day;
 
-
     @ManyToOne
     Employee employee;
+
+
+    public double getHoursWorkedAsDecimal() {
+        String[] timeParts = totalTimeWorked.split(":");
+        int hours = Integer.parseInt(timeParts[0]);
+        int minutes = Integer.parseInt(timeParts[1]);
+        return hours + (minutes / 60.0);
+    }
+
+    // Calculate extra hours (hours worked over 8)
+    public double getExtraHours() {
+        double hoursWorked = getHoursWorkedAsDecimal();
+        return Math.max(0, hoursWorked - 8);
+    }
+
+    // Calculate the bonus for extra hours
+    public double calculateBonusForExtraHours(double hourlyBonusRate) {
+        return getExtraHours() * hourlyBonusRate;
+    }
 
 }

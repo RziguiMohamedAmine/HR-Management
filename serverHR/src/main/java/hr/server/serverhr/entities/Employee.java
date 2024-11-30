@@ -48,5 +48,7 @@ public class Employee implements Serializable {
     @JsonIgnore
     private Set<Materials> materials ;
 
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Salary salary;
 
 }

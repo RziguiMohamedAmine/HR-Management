@@ -2,8 +2,10 @@ package hr.server.serverhr.services;
 
 import hr.server.serverhr.entities.Employee;
 import hr.server.serverhr.entities.Présence;
+import hr.server.serverhr.entities.Salary;
 import hr.server.serverhr.repositories.EmployeeRepository;
 import hr.server.serverhr.repositories.PrésenceRepository;
+import hr.server.serverhr.repositories.SalaryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,11 @@ public class PrésenceService implements IPrésenceService{
 
     @Autowired
     EmployeeRepository employeeRepository;
+
+    @Autowired
+    private SalaryRepository salaryRepository;
+
+    private static final double HOURLY_BONUS_RATE = 20.0; // 20$ per extra hour
 
     @Override
     public Présence ajouterPrésence(Présence présence) {
@@ -67,4 +74,28 @@ public class PrésenceService implements IPrésenceService{
     public void DeletePresence(int id) {
         présenceRepository.deleteById(id);
     }
+
+
+    public double calculateTotalBonusForEmployee(int employeeId) {
+        List<Présence> attendanceRecords = présenceRepository.findByEmployeeIdEmployee(employeeId);
+
+        return attendanceRecords.stream()
+                .mapToDouble(attendance ->
+                        attendance.calculateBonusForExtraHours(HOURLY_BONUS_RATE))
+                .sum();
+    }
+    @Override
+    public void updateSalaryWithExtraHoursBonus(int employeeId) {
+        double totalBonus = calculateTotalBonusForEmployee(employeeId);
+
+        Salary salary = salaryRepository.findByEmployeeIdEmployee(employeeId)
+                .orElseThrow(() -> new RuntimeException("Salary not found for employee"));
+
+        // Update the bonus in the salary
+        salary.setBonuses(salary.getBonuses() + totalBonus);
+        salaryRepository.save(salary);
+    }
+
+
+
 }

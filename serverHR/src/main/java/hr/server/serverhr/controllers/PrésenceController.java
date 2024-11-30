@@ -45,5 +45,9 @@ public class PrésenceController {
         return présenceService.getAllDayPresence(date);
     }
 
+    @PostMapping("/calculate-bonus/{employeeId}")
+    public void calculateAndAddBonusToSalary(@PathVariable int employeeId) {
+        présenceService.updateSalaryWithExtraHoursBonus(employeeId);
+    }
 
 }
