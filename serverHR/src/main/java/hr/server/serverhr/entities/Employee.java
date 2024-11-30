@@ -27,6 +27,7 @@ public class Employee implements Serializable {
     @Enumerated(EnumType.STRING)
     private Fonction fonction ;
     private String email;
+    private String image;
 
     private float soldecongé;
     @OneToMany(cascade = CascadeType.ALL, mappedBy="employee")
@@ -36,5 +37,16 @@ public class Employee implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
     @JsonIgnore
     private  Set<Conge> conges ;
+
+    @ManyToOne
+    Projet projet;
+
+    @OneToOne(mappedBy = "teamManager")
+    private Projet managedProject;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    @JsonIgnore
+    private Set<Materials> materials ;
+
 
 }
