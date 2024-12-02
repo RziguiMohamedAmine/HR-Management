@@ -86,6 +86,7 @@ public class PrésenceService implements IPrésenceService{
     }
     @Override
     public void updateSalaryWithExtraHoursBonus(int employeeId) {
+
         double totalBonus = calculateTotalBonusForEmployee(employeeId);
 
         Salary salary = salaryRepository.findByEmployeeIdEmployee(employeeId)
@@ -94,6 +95,15 @@ public class PrésenceService implements IPrésenceService{
         // Update the bonus in the salary
         salary.setBonuses(salary.getBonuses() + totalBonus);
         salaryRepository.save(salary);
+
+        List<Présence> attendanceRecords = présenceRepository.findByEmployeeIdEmployee(employeeId);
+        if (attendanceRecords.isEmpty()) {
+            throw new RuntimeException("Attendance records not found for employee");
+        }
+
+        attendanceRecords.forEach(attendance -> attendance.setTotalTimeWorked("8:00"));
+        présenceRepository.saveAll(attendanceRecords);
+
     }
 
 

@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
                                 // Configure authentication requests
-                                .antMatchers("/auth/**").permitAll()
+                                .antMatchers("/**").permitAll()///auth/**
                                 // Configure all other requests after the root path ("/")
                                 .anyRequest().authenticated()
                 )

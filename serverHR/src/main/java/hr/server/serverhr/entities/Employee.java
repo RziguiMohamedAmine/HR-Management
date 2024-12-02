@@ -28,6 +28,7 @@ public class Employee implements Serializable {
     private Fonction fonction ;
     private String email;
     private String image;
+    private String addresse;
 
     private float soldecongé;
     @OneToMany(cascade = CascadeType.ALL, mappedBy="employee")
@@ -51,4 +52,7 @@ public class Employee implements Serializable {
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private Salary salary;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    @JsonIgnore
+    private  Set<PaymentHistory> paymentHistories ;
 }

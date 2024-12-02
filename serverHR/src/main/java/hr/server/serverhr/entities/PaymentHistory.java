@@ -12,23 +12,19 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Salary implements Serializable {
+public class PaymentHistory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private Long id;
-    @Column(nullable = false)
     private double baseSalary;
     private double bonuses;
-    @Column(nullable = false)
-    private FrequencyPay paymentFrequency;
     private double deductions;
+    private double totalPaid; // Final amount paid after bonuses and deductions
+    private LocalDate paymentDate; // Date when the payment was validated
 
-    private boolean paymentValidated; // Whether the salary is validated for the month
-
-    private LocalDate lastPaymentDate;
-    @OneToOne
-    @JoinColumn(name = "idEmployee", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
-
 
 }
