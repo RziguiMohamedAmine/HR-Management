@@ -31,6 +31,20 @@ public class Présence implements Serializable {
     @ManyToOne
     Employee employee;
 
+    private boolean absent; // Automatically computed
+    private boolean justifiedAbsence; // Manually set
+    private String justification;
+    @PostLoad
+    @PrePersist
+    @PreUpdate
+    public void checkAbsence() {
+        if (arrivalTime == null || departureTime == null) {
+            this.absent = true;
+            this.totalTimeWorked = "0:00"; // No work hours if absent
+        } else {
+            this.absent = false;
+        }
+    }
 
     public double getHoursWorkedAsDecimal() {
         String[] timeParts = totalTimeWorked.split(":");
@@ -48,6 +62,22 @@ public class Présence implements Serializable {
     // Calculate the bonus for extra hours
     public double calculateBonusForExtraHours(double hourlyBonusRate) {
         return getExtraHours() * hourlyBonusRate;
+    }
+
+    public Boolean getAbsent() {
+        return absent;
+    }
+
+    public void setAbsent(Boolean absent) {
+        this.absent = absent;
+    }
+
+    public String getJustification() {
+        return justification;
+    }
+
+    public void setJustification(String justification) {
+        this.justification = justification;
     }
 
 }

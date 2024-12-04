@@ -1,9 +1,11 @@
 package hr.server.serverhr.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -22,6 +24,15 @@ public class Materials implements Serializable {
     private MatStatus status;
     private double cost;
 
-    @ManyToOne
-    Employee employee;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "material")
+    @JsonIgnore
+    private Set<Allocation> allocations ;
+
+    public void decreaseQuantity(int quantityAllocated) {
+        if (this.quantity >= quantityAllocated) {
+            this.quantity -= quantityAllocated;
+        } else {
+            throw new IllegalStateException("Not enough material available to allocate");
+        }
+    }
 }

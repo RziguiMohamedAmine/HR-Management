@@ -1,12 +1,16 @@
 package hr.server.serverhr.services;
 
+import hr.server.serverhr.entities.Allocation;
+import hr.server.serverhr.entities.Employee;
 import hr.server.serverhr.entities.Materials;
+import hr.server.serverhr.repositories.AllocationRepository;
 import hr.server.serverhr.repositories.EmployeeRepository;
 import hr.server.serverhr.repositories.MaterialsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -18,13 +22,11 @@ public class MaterialsService implements IMaterialsService{
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private AllocationRepository allocationRepository;
 
     @Override
     public Materials createMaterial(Materials materialResource) {
-        if (materialResource.getEmployee() != null) {
-            employeeRepository.findById(materialResource.getEmployee().getIdEmployee())
-                    .orElseThrow(() -> new RuntimeException("Employee not found"));
-        }
         return materialsRepository.save(materialResource);
     }
 
@@ -50,11 +52,6 @@ public class MaterialsService implements IMaterialsService{
         existingMaterial.setStatus(materialResource.getStatus());
         existingMaterial.setCost(materialResource.getCost());
 
-        if (materialResource.getEmployee() != null) {
-            employeeRepository.findById(materialResource.getEmployee().getIdEmployee())
-                    .orElseThrow(() -> new RuntimeException("Employee not found"));
-            existingMaterial.setEmployee(materialResource.getEmployee());
-        }
 
         return materialsRepository.save(existingMaterial);
     }
@@ -64,8 +61,28 @@ public class MaterialsService implements IMaterialsService{
         materialsRepository.deleteById(id);
     }
 
+
     @Override
-    public List<Materials> getMaterialsByEmployeeId(int employeeId) {
-        return materialsRepository.findByEmployeeIdEmployee(employeeId);
+    public Allocation allocateMaterialsToEmployee(Long matId, int employeeId, int quantity) {
+        Materials material = materialsRepository.findById(matId)
+                .orElseThrow(() -> new RuntimeException("Material not found"));
+
+        // Check if enough quantity is available
+        material.decreaseQuantity(quantity);
+        materialsRepository.save(material); // Save the updated material quantity
+
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new RuntimeException("Employee not found"));
+
+        // Create a new allocation entry
+        Allocation allocation = new Allocation();
+        allocation.setMaterial(material);
+        allocation.setEmployee(employee); // Set the employee (you would have a valid Employee object here)
+        allocation.setQuantityAllocated(quantity);
+        allocation.setAllocationDate(LocalDateTime.now());
+
+        // Save the allocation to the database
+        return allocationRepository.save(allocation);
     }
+
+
 }

@@ -47,7 +47,7 @@ public class Employee implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
     @JsonIgnore
-    private Set<Materials> materials ;
+    private Set<Allocation> allocations ;
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private Salary salary;

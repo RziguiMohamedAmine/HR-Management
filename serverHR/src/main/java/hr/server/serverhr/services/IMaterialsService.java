@@ -1,5 +1,6 @@
 package hr.server.serverhr.services;
 
+import hr.server.serverhr.entities.Allocation;
 import hr.server.serverhr.entities.Materials;
 
 import java.util.List;
@@ -10,5 +11,6 @@ public interface IMaterialsService {
     List<Materials> getAllMaterials();
     Materials updateMaterial(Long id, Materials materialResource);
     void deleteMaterial(Long id);
-    List<Materials> getMaterialsByEmployeeId(int employeeId);
+
+    Allocation allocateMaterialsToEmployee(Long matId, int employeeId, int quantity);
 }
