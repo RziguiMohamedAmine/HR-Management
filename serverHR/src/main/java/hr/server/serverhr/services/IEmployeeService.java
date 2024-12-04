@@ -1,6 +1,7 @@
 package hr.server.serverhr.services;
 
 import hr.server.serverhr.entities.Employee;
+import hr.server.serverhr.entities.Training;
 
 import java.util.List;
 
@@ -10,5 +11,6 @@ public interface IEmployeeService {
     List<Employee> RetrieveAllEmployees();
     Employee RetrieveEmployee(int id);
     void DeleteEmployee(int id);
+    List<Training> getEmployeeTrainings(int employeeId);
 
 }

@@ -7,7 +7,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -55,4 +57,7 @@ public class Employee implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
     @JsonIgnore
     private  Set<PaymentHistory> paymentHistories ;
+
+    @ManyToMany(mappedBy = "attendees")
+    private List<Training> trainingClasses;
 }
