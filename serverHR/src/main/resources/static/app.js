@@ -3,9 +3,12 @@ const stompClient = new StompJs.Client({
     onConnect: (frame) => {
         console.log('Connected: ' + frame);
 
+        // Subscribe to the admin-specific topic
+        const adminId = 1; // Hardcoded admin ID
+
         // Automatically subscribe to the /topic/greetings when connected
-        stompClient.subscribe('/topic/greetings', (greeting) => {
-            showNotification(JSON.parse(greeting.body).message);  // Show the greeting message
+        stompClient.subscribe(`/topic/admin-${adminId}`, (notification) => {
+            showNotification(JSON.parse(notification.body).message); // Display the notification message
         });
     },
     onWebSocketError: (error) => {

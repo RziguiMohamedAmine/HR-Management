@@ -60,4 +60,12 @@ public class Employee implements Serializable {
 
     @ManyToMany(mappedBy = "attendees")
     private List<Training> trainingClasses;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="employee")
+    @JsonIgnore
+    private Set<Document> documents;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="employee")
+    @JsonIgnore
+    private Set<Contract> contracts;
 }

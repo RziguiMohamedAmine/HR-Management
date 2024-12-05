@@ -5,6 +5,7 @@ import hr.server.serverhr.entities.Employee;
 import hr.server.serverhr.entities.Greeting;
 import hr.server.serverhr.entities.Notification;
 import hr.server.serverhr.entities.Training;
+import hr.server.serverhr.repositories.NotificationRepository;
 import hr.server.serverhr.services.IEmployeeService;
 
 import lombok.AllArgsConstructor;
@@ -25,14 +26,20 @@ public class EmployeeController {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
+    @Autowired
+    private NotificationRepository notificationRepository;
+
     @PostMapping("/ajouterEmployee")
     Employee ajouterEmployee(@RequestBody Employee employee)
     {
         Employee addedEmployee = employeeService.AjouterEmployee(employee);
-
+        Long adminId = 1L;
         // Send a notification message after adding a new employee
         String message = "Employee added: " + addedEmployee.getNom();
-        messagingTemplate.convertAndSend("/topic/greetings", new Notification(message)); // Send notification to WebSocket
+        Notification notification = new Notification(message, adminId);
+        notificationRepository.save(notification);
+
+        messagingTemplate.convertAndSend("/topic/admin-" + adminId, notification); // Send notification to WebSocket
 
         return addedEmployee;
     }
