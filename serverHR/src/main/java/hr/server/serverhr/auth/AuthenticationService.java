@@ -6,7 +6,7 @@ import hr.server.serverhr.entities.Role;
 import hr.server.serverhr.entities.User;
 import hr.server.serverhr.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.var;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
