@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,HeaderComponent,SidebarComponent, CommonModule, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet,HeaderComponent,SidebarComponent, CommonModule],
   // encapsulation: ViewEncapsulation.None,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
