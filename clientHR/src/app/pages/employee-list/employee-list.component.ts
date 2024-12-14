@@ -1,30 +1,77 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { AbstractControl, FormsModule, FormControl, FormGroup, Validators, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SettingsComponent } from '../../components/settings/settings.component';
-import { RouterModule } from '@angular/router';
-import { Router } from 'express';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
+import { Employee } from '../../models/employee';
+import { EmployeeService } from '../../service/employee.service';
+import { Fonction } from '../../models/fonction';
+import Validation from '../../utils/validation';
 
 @Component({
   selector: 'app-employee-list',
   standalone: true,
-  imports: [FormsModule, CommonModule, SettingsComponent, RouterModule],
+  imports: [FormsModule, CommonModule, SettingsComponent, RouterModule, ReactiveFormsModule ],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.css',
   //host: {ngSkipHydration: 'true'},
 })
-export class EmployeeListComponent {
+export class EmployeeListComponent implements OnInit {
+  id!:number;
+  url !: any;
+  employee: Employee= new Employee();
+  employees: Employee[] = [];
+
+
+
+
+  constructor(public employeeService:EmployeeService,private router:Router,private formBuilder: FormBuilder) { }
+
+  ngOnInit(): void {
+    this.getEmployeeList();
+    
+  }
+
  
+
+
+
+  AddEmployee()
+  {
+      this.employeeService.AddEmployee(this.employee).subscribe(data=>{
+      console.log(data);
+    },error=>console.log(error));
+  
+  }
+  readUrl(event:any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+  
+      reader.onload = (event: ProgressEvent) => {
+        this.url = (<FileReader>event.target).result;
+      }
+    
+      reader.readAsDataURL(event.target.files[0]);
+      this.employee.image=event.target.files[0].name;
+    }
+  }
+
+
+ 
+  getEmployeeList(): void {
+    // Call the service to get employee data
+    this.employeeService.getEmployees().subscribe((data: Employee[]) => {
+      this.employees = data;
+     
+    });
+  }
+
+
+
 
 employeeId = '';   
 employeeName = '';
   
-employee = {
-  firstName: '',
-  lastName: '',
-  holidaysPermission: false,
-  leavesPermission: false
-};
 
 editedEmployee = {
   firstName: 'John',
@@ -66,10 +113,6 @@ showDeleteModal: boolean = true;
     //this.employeeToDelete = employee;  // Store the employee data to be deleted
     this.showDeleteModal = !this.showDeleteModal;
   }
-onSubmit() {
-  console.log('Employee Data:', this.employee);
-  // You can handle form submission here, e.g., send the data to an API
-}
 
 onDelete() {
   this.toggleDeleteModal();
@@ -77,6 +120,7 @@ onDelete() {
 
 selectedDesignation = '';
 designations = ['Web Developer', 'Web Designer', 'Android Developer', 'iOS Developer'];
+
 
 onSearch() {
   console.log('Searching with:', this.employeeId, this.employeeName, this.selectedDesignation);

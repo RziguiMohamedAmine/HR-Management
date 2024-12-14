@@ -29,6 +29,6 @@ export class Employee {
     salary!: Salary;
     managedProject!: Project;
     documents!: Set<Document>;
-    contract !:Set<Contract>;
+    contract !: Contract;
     trainingClasses!: Set<Training>;
 }

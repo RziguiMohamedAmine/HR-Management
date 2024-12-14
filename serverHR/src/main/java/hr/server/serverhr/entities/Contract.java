@@ -1,6 +1,7 @@
 package hr.server.serverhr.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,8 +20,9 @@ public class Contract implements Serializable {
     @Setter(AccessLevel.NONE)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "idEmployee", nullable = false)
+    @JsonIgnore
     private Employee employee;
 
     private Date startDate;

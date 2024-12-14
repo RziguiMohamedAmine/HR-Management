@@ -9,10 +9,17 @@ import { AttendanceDetailsComponent } from './pages/attendance-details/attendanc
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
-    { path: 'employees', component: EmployeeListComponent },
+    {
+        path: 'employees',
+        component: EmployeeListComponent,
+        children: [
+          { path: 'add', component: EmployeeFormComponent },  // Add Employee form route
+          { path: 'edit/:id', component: EmployeeFormComponent }, // Edit Employee route
+        ]
+      },
     { path: 'leaves', component: LeavesListComponent },
     { path: 'attendance', component: AttendanceListComponent },
-    { path: 'employees/add', component: EmployeeFormComponent },
+    { path: 'addEmployee', component: EmployeeFormComponent },
     { path: 'employees/edit/:id', component: EmployeeFormComponent },
     { path: 'employees/:id', component: EmployeeDetailsComponent },
     { path: 'attendance/:id', component: AttendanceDetailsComponent },

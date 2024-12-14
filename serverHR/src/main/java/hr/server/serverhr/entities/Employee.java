@@ -65,7 +65,6 @@ public class Employee implements Serializable {
     @JsonIgnore
     private Set<Document> documents;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="employee")
-    @JsonIgnore
-    private Set<Contract> contracts;
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Contract contract;
 }

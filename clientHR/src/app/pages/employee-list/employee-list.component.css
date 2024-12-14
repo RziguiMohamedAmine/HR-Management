@@ -1,0 +1,7 @@
+.validdd{
+    border: 2px solid rgb(0, 255, 13);
+}
+
+.nonValidd{
+    border: 2px solid red;
+}

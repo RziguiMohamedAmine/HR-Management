@@ -2,7 +2,7 @@ import { Employee } from "./employee";
 
 export class Contract {
     id!: number; 
-    employee!: Employee; 
+    employeeId !: number; 
     startDate!: string; 
     endDate!: string; 
     terms!: string; 
