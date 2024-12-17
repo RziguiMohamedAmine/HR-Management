@@ -13,7 +13,7 @@ export class EmployeeService {
 
   private baseUrl ="http://localhost:8008/HrMangement/Employee";
   private afficher = "/afficherAllEmployee";
-  private ajouter = "/ajouterEnseignant";
+  private ajouter = "/ajouterEmployee";
   private getById = "/afficherEmployee";
   private udpate = "/updateEmployee"; 
   private delete = "/deleteEmployee";
@@ -37,12 +37,12 @@ export class EmployeeService {
     return this.httpClient.post(`${this.baseUrl+this.ajouter}`,E);                        
   }
 
-  getEnseignantById(id:number):Observable<Employee>
+  getEmployeeById(id:number):Observable<Employee>
   {
     return this.httpClient.get<Employee>(`${this.baseUrl+this.getById}/${id}`);
   }
 
-  ModifierEnseignant(id:number,emp:Employee):Observable<Object>
+  ModifierEmployee(id:number,emp:Employee):Observable<Object>
   {
     emp.idEmployee = id;
     return this.httpClient.put<Employee>(`${this.baseUrl+this.udpate}`,emp);

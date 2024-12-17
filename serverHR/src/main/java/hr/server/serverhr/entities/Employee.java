@@ -31,6 +31,8 @@ public class Employee implements Serializable {
     private String email;
     private String image;
     private String addresse;
+    @Temporal(TemporalType.DATE)
+    private Date dateNaissance;
 
     private float soldecongé;
     @OneToMany(cascade = CascadeType.ALL, mappedBy="employee")
@@ -44,8 +46,8 @@ public class Employee implements Serializable {
     @ManyToOne
     Projet projet;
 
-    @OneToOne(mappedBy = "teamManager")
-    private Projet managedProject;
+//    @OneToOne(mappedBy = "teamManager")
+//    private Projet managedProject;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
     @JsonIgnore

@@ -7,6 +7,7 @@ import { Employee } from '../../models/employee';
 import { EmployeeService } from '../../service/employee.service';
 import { Fonction } from '../../models/fonction';
 import Validation from '../../utils/validation';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-employee-list',
@@ -33,7 +34,30 @@ export class EmployeeListComponent implements OnInit {
   }
 
  
+  delete(id: number)
+  {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#ff902f',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+        this.employeeService.deleteEmployee(id).subscribe(data=>{
+          this.getEmployeeList();
+        });
+      }
+    })            
 
+  }
 
 
   AddEmployee()

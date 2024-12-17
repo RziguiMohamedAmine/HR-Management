@@ -78,11 +78,11 @@
                 <tr *ngFor="let employee of employees">
                   <td>
                     <h2 class="table-avatar">
-                      <a href="profile.html" class="avatar">
+                      <a [routerLink]="['/employees', employee.idEmployee]" class="avatar">
                         <img
                           src="assets/img/profiles/{{employee.image}}"
                           alt="User Image"/></a>
-                      <a href="profile.html">{{employee.prenom}} {{employee.nom}}
+                      <a [routerLink]="['/employees', employee.idEmployee]">{{employee.prenom}} {{employee.nom}}
                       <span>{{employee.fonction}}</span></a>
                     </h2>
                   </td>
@@ -107,17 +107,14 @@
                         <a
                           class="dropdown-item"
                           (click)="toggleEditModal(); $event.preventDefault()"
-                          data-bs-toggle="modal"
-                          data-bs-target="#edit_employee"
+                          [routerLink]="['/employees/edit', employee.idEmployee]"
                           ><i class="fa-solid fa-pencil m-r-5"></i> Edit</a
                         >
 
 
                         <a
                           class="dropdown-item"
-                          (click)="toggleDeleteModal(); $event.preventDefault()"
-                          data-bs-toggle="modal"
-                          data-bs-target="#delete_employee"
+                          (click)="delete(employee.idEmployee)" 
                           ><i class="fa-regular fa-trash-can m-r-5"></i>
                           Delete</a
                         >
@@ -135,113 +132,6 @@
 
 
     
-    
-
-
-
-    <div *ngIf="showEditModal" id="edit_employee" class="modal custom-modal fade" role="dialog">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Edit Employee</h5>
-            <button type="button" class="btn-close" (click)="toggleEditModal()" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form (ngSubmit)="onEditSubmit()">
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="input-block mb-3">
-                    <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" [(ngModel)]="editedEmployee.firstName" name="firstName" required />
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="input-block mb-3">
-                    <label class="col-form-label">Last Name</label>
-                    <input class="form-control" type="text" [(ngModel)]="editedEmployee.lastName" name="lastName" />
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="input-block mb-3">
-                    <label class="col-form-label">Username <span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" [(ngModel)]="editedEmployee.username" name="username" required />
-                  </div>
-                </div>
-              </div>
-              <div class="table-responsive m-t-15">
-                <table class="table table-striped custom-table">
-                  <thead>
-                    <tr>
-                      <th>Module Permission</th>
-                      <th class="text-center">Read</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Holidays</td>
-                      <td class="text-center">
-                        <label class="custom_check">
-                          <input type="checkbox" [(ngModel)]="editedEmployee.permissions.holidays" name="holidaysPermission" />
-                          <span class="checkmark"></span>
-                        </label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Leaves</td>
-                      <td class="text-center">
-                        <label class="custom_check">
-                          <input type="checkbox" [(ngModel)]="editedEmployee.permissions.leaves" name="leavesPermission" />
-                          <span class="checkmark"></span>
-                        </label>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="submit-section">
-                <button type="submit" class="btn btn-primary submit-btn">Save</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div *ngIf="showDeleteModal" id="delete_employee" class="modal custom-modal fade" role="dialog">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-body">
-            <div class="form-header">
-              <h3>Delete Employee</h3>
-              <p>Are you sure you want to delete ?</p>
-            </div>
-            <div class="modal-btn delete-action">
-              <div class="row">
-                <div class="col-6">
-                    <a
-                        href="javascript:void(0);"
-                        class="btn btn-primary continue-btn"
-                        (click)="onDelete()"
-                        >Delete</a
-                      >
-                </div>
-                <div class="col-6">
-                    <a
-                    href="javascript:void(0);"
-                    (click)="toggleDeleteModal()"
-                    class="btn btn-primary cancel-btn"
-                    >Cancel</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-
 
 
 

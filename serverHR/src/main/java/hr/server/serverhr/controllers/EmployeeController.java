@@ -1,10 +1,7 @@
 package hr.server.serverhr.controllers;
 
 
-import hr.server.serverhr.entities.Employee;
-import hr.server.serverhr.entities.Greeting;
-import hr.server.serverhr.entities.Notification;
-import hr.server.serverhr.entities.Training;
+import hr.server.serverhr.entities.*;
 import hr.server.serverhr.repositories.NotificationRepository;
 import hr.server.serverhr.services.IEmployeeService;
 
@@ -44,6 +41,19 @@ public class EmployeeController {
         return addedEmployee;
     }
 
+    @PutMapping("/assignProject/{idEmployee}")
+    Employee assignProject(@PathVariable int idEmployee, @RequestBody Projet projet)
+    {
+        return employeeService.AssignProject(idEmployee,projet);
+    }
+
+    @GetMapping("/{employeeId}/projects")
+    public ResponseEntity<List<Projet>> getEmployeeProjects(@PathVariable int employeeId) {
+        List<Projet> projects = employeeService.getEmployeeProjects(employeeId);
+        return ResponseEntity.ok(projects);
+    }
+
+
     @PutMapping("/updateEmployee")
     Employee updateEmployee(@RequestBody Employee employee)
     {
@@ -60,7 +70,7 @@ public class EmployeeController {
         return employeeService.RetrieveEmployee(id);
     }
 
-    @DeleteMapping("/deleteEmployee")
+    @DeleteMapping("/deleteEmployee/{id}")
     void deleteEmployee(@PathVariable int id){
         employeeService.DeleteEmployee(id);
     }

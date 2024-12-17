@@ -20,6 +20,7 @@ export class Employee {
     addresse!: string;
     soldecongé!: number; 
     fonction!: Fonction;  
+    dateNaissance!: string; 
     
     allocations!:Set<Allocation>;  
     leaves!: Set<Leaves>;
@@ -27,7 +28,6 @@ export class Employee {
     attendances!: Set<Attendance>;
     paymentHistories!: Set<PaymentHistories>;
     salary!: Salary;
-    managedProject!: Project;
     documents!: Set<Document>;
     contract !: Contract;
     trainingClasses!: Set<Training>;

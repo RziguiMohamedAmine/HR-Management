@@ -39,9 +39,10 @@ public class Projet implements Serializable {
     private List<String> attachments;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Task> tasks;
 
-    @OneToOne
-    @JoinColumn(name = "team_manager_id", unique = true)
-    Employee teamManager;
+//    @OneToOne
+//    @JoinColumn(name = "team_manager_id", unique = true)
+//    Employee teamManager;
 }
