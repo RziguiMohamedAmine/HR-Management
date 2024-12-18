@@ -489,7 +489,7 @@
                       </div>
                     </div>
                     <h4 class="project-title">
-                      <a href="">{{projet.projectName}}</a>
+                      <a href="">{{ employee.projet ? (projet.projectName) : 'Not Affected yet' }}</a>
                     </h4>
                     <small class="block text-ellipsis m-b-15">
                       <span class="text-xs">1</span>
@@ -498,11 +498,11 @@
                       <span class="text-muted"> tasks completed</span>
                     </small>
                     <p class="text-muted">
-                      {{projet.description}}
+                      {{ employee.projet ? (projet?.description) : '-' }}
                     </p>
                     <div class="pro-deadline m-b-15">
                       <div class="sub-title">Deadline:</div>
-                      <div class="text-muted"> {{projet.deadLine}}</div>
+                      <div class="text-muted">  {{ employee.projet ? (projet?.deadLine) : '-' }}</div>
                     </div>
                     <div class="project-members m-b-15">
                       <div>Project Leader :</div>

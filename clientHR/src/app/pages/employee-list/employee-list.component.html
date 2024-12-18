@@ -44,7 +44,7 @@
         </div>
         <div class="col-sm-6 col-md-3">
           <div class="input-block mb-3 form-focus select-focus">
-            <select class="select" [(ngModel)]="selectedDesignation">
+            <select class="form-select" style="height: 50px;" [(ngModel)]="selectedDesignation">
               <option>Select Designation</option>
               <option *ngFor="let designation of designations" [value]="designation">
                 {{ designation }}
@@ -52,7 +52,7 @@
             </select>
             <label class="focus-label">Designation</label>
           </div>
-        </div>
+        </div>      
         <div class="col-sm-6 col-md-3">
           <button class="btn btn-success w-100" (click)="onSearch()">Search</button>
         </div>

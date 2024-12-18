@@ -2,13 +2,17 @@ package hr.server.serverhr.controllers;
 
 
 import hr.server.serverhr.entities.Présence;
+import hr.server.serverhr.repositories.PrésenceRepository;
 import hr.server.serverhr.services.IPrésenceService;
 import hr.server.serverhr.services.PrésenceService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -22,25 +26,30 @@ public class PrésenceController {
 
     IPrésenceService présenceService;
 
+    @Autowired
+    PrésenceRepository présenceRepository;
+
     @PostMapping("/ajouterPrésence")
     Présence ajouterPrésence(@RequestBody Présence présence){
         return présenceService.ajouterPrésence(présence);
     }
 
 
-    @PostMapping("/{presenceId}/arrival")
+    @PostMapping("/arrival/{employeeId}")
     public ResponseEntity<Présence> addArrival(
-            @PathVariable int presenceId,
-            @RequestBody LocalDateTime arrivalTime) {
-        Présence updatedPrésence = présenceService.addArrival(presenceId, arrivalTime);
+            @PathVariable int employeeId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime arrivalTime) {
+        Présence updatedPrésence = présenceService.addArrival(employeeId, date, arrivalTime);
         return ResponseEntity.ok(updatedPrésence);
     }
 
-    @PostMapping("/{presenceId}/departure")
+    @PostMapping("/departure/{employeeId}")
     public ResponseEntity<Présence> addDeparture(
-            @PathVariable int presenceId,
-            @RequestBody LocalDateTime departureTime) {
-        Présence updatedPrésence = présenceService.addDeparture(presenceId, departureTime);
+            @PathVariable int employeeId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime departureTime) {
+        Présence updatedPrésence = présenceService.addDeparture(employeeId, date, departureTime);
         return ResponseEntity.ok(updatedPrésence);
     }
 
@@ -52,6 +61,11 @@ public class PrésenceController {
     @GetMapping("/afficherAllPrésence/{id}")
     List<Présence> retrieveAllPrésence(@PathVariable int id){
         return présenceService.retrieveAllPrésence(id);
+    }
+
+    @GetMapping("/afficherAllPrésence")
+    List<Présence> getAllPrésence(){
+        return présenceService.getAllPrésence();
     }
 
     @GetMapping("/getAllDayPresence/{date}")
@@ -74,5 +88,18 @@ public class PrésenceController {
         Présence updatedPrésence = présenceService.justifyAbsence(id, justification);
         return ResponseEntity.ok(updatedPrésence);
     }
+
+    @GetMapping
+    public ResponseEntity<List<Présence>> getPresences(
+            @RequestParam(required = false) Integer year,
+            @RequestParam(required = false) Integer month
+    ) {
+        if (year != null && month != null) {
+            return ResponseEntity.ok(présenceRepository.findByYearAndMonth(year, month));
+        }
+        return ResponseEntity.ok(présenceRepository.findAll());
+    }
+
+
 
 }

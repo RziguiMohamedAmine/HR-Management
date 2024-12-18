@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -48,24 +49,25 @@ public class PrésenceService implements IPrésenceService{
     }
 
     @Override
-    public Présence addArrival(int presenceId, LocalDateTime arrivalTime) {
-        // Fetch the presence record
-        Présence présence = présenceRepository.findById(presenceId)
-                .orElseThrow(() -> new RuntimeException("Presence record not found"));
+    public Présence addArrival(int employeeId, Date date, LocalDateTime arrivalTime) {
+        // Fetch the presence record for the employee on the given date
+        Présence présence = présenceRepository.findByEmployeeIdEmployeeAndDay(employeeId, date)
+                .orElseThrow(() -> new RuntimeException("Presence record not found for employee ID " + employeeId + " on " + date));
 
         // Set the arrival time
         présence.setArrivalTime(arrivalTime);
 
+        // Save and return the updated presence record
         return présenceRepository.save(présence);
     }
 
     @Override
-    public Présence addDeparture(int presenceId, LocalDateTime departureTime) {
+    public Présence addDeparture(int employeeId, Date date, LocalDateTime departureTime) {
         // Fetch the presence record
-        Présence présence = présenceRepository.findById(presenceId)
-                .orElseThrow(() -> new RuntimeException("Presence record not found"));
+        Présence présence = présenceRepository.findByEmployeeIdEmployeeAndDay(employeeId, date)
+                .orElseThrow(() -> new RuntimeException("Presence record not found for employee ID " + employeeId + " on " + date));
 
-        // Set the departure time
+        // Set the arrival time
         présence.setDepartureTime(departureTime);
 
         // Calculate the total time worked (if arrival time exists)
@@ -170,6 +172,10 @@ public class PrésenceService implements IPrésenceService{
         }
     }
 
+    @Override
+    public List<Présence> getAllPrésence() {
+        return présenceRepository.findAll();
+    }
 
 
 

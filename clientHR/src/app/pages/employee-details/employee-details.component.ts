@@ -30,12 +30,15 @@ export class EmployeeDetailsComponent implements OnInit{
     this.projet = new Project();
     this.employeeService.getEmployeeById(this.id).subscribe(data=>{
       this.employee = data;
-      this.idProject = data.projet.idProjet
-      this.projectService.getProjectById(data.projet.idProjet).subscribe(data=>{
-        this.projet = data;
-      })
+      //this.idProject = data.projet.idProjet
+      if(data.projet){
+        this.projectService.getProjectById(data.projet.idProjet).subscribe(data=>{
+          this.projet = data;
+        })
+        this.getEmployeeList(this.employee)
+      }
       //console.log(this.employee)
-      this.getEmployeeList(this.employee)
+      
   });
  
   }
