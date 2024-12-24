@@ -7,6 +7,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Employee } from '../../models/employee';
 import { ProjetService } from '../../service/projet.service';
 import { Project } from '../../models/project';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-employee-details',
@@ -28,25 +29,37 @@ export class EmployeeDetailsComponent implements OnInit{
      this.id = this.ac.snapshot.params['idEmployee'];
     this.employee = new Employee();
     this.projet = new Project();
-    this.employeeService.getEmployeeById(this.id).subscribe(data=>{
+    const token = localStorage.getItem('auth-token');
+    if (token) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    this.employeeService.getEmployeeById(this.id,headers).subscribe(data=>{
       this.employee = data;
+      console.log(data)
       //this.idProject = data.projet.idProjet
       if(data.projet){
-        this.projectService.getProjectById(data.projet.idProjet).subscribe(data=>{
+        this.projectService.getProjectById(data.projet.idProjet,headers).subscribe(data=>{
           this.projet = data;
         })
         this.getEmployeeList(this.employee)
       }
+      
       //console.log(this.employee)
       
   });
- 
+      } else {
+        console.error('No auth token found!');
+      }
   }
 
 
   getEmployeeList(emp:Employee): void {
-   
-    this.projectService.getEmployees(emp.projet.idProjet).subscribe((data: Employee[]) => {
+    const token = localStorage.getItem('auth-token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    this.projectService.getEmployees(emp.projet.idProjet,headers).subscribe((data: Employee[]) => {
       this.employees = data;
     // console.log(this.employees)
     });

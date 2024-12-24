@@ -75,12 +75,14 @@
       <div class="col-sm-6">
         <div class="form-group">
           <label>Fonction</label>
-          <input
-            type="text"
-            formControlName="fonction"
-            class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f['fonction'].errors }"
-          />
+            <select id="fonction" formControlName="fonction" class="form-select" 
+               [ngClass]="{ 'is-invalid': submitted && f['fonction'].errors }">
+              <option value="">Select Fonction</option>
+              <option *ngFor="let fonction of fonctions" [value]="fonction">
+                {{fonction}}
+              </option>
+            </select>
+
           <div *ngIf="submitted && f['fonction'].errors" class="invalid-feedback">
             <div *ngIf="f['fonction'].errors['required']">Fonction is required</div>
           </div>

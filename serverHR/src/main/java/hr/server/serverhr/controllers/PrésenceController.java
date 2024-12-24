@@ -20,7 +20,7 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/Présence")
+@RequestMapping("/HrMangement/Présence")
 @Tag(name = "Présence Management")
 public class PrésenceController {
 

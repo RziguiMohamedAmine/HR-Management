@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/Conge")
+@RequestMapping("/HrMangement/Conge")
 @Tag(name = "Conge Management")
 public class CongeController {
 

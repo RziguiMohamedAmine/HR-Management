@@ -25,7 +25,7 @@
               "src/assets/img/favicon.png"
             ],
             "styles": [
-              "src/styles.css",
+              "src/assets/css/style.css",
               "src/assets/css/bootstrap.min.css",
               "src/assets/plugins/fontawesome/css/fontawesome.min.css",
               "src/assets/plugins/fontawesome/css/all.min.css",
@@ -35,8 +35,13 @@
               "src/assets/css/style.css",
               "src/assets/css/dataTables.bootstrap4.min.css",
               "src/assets/css/select2.min.css",
+              "src/assets/css/ckeditor.css",
+              "src/assets/css/feather.css",
+              "src/assets/css/owl.carousel.min.css",
+              "src/assets/css/material.css",
               "src/assets/css/bootstrap-datetimepicker.min.css",
               "src/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css",
+              "src/assets/plugins/simpleline/simple-line-icons.css",
               "src/assets/plugins/select2/css/select2.min.css"
              
             ],
@@ -74,9 +79,23 @@
               "src/assets/js/task.js",
               "src/assets/js/theme-settings.js",
               "src/assets/plugins/morris/morris.min.js",
+              "src/assets/plugins/morris/raphael-min.js",
               "src/assets/plugins/morris/chart-data.js",
               "src/assets/plugins/select2/js/custom-select.js",
-              "src/assets/plugins/select2/js/select2.min.js"
+              "src/assets/plugins/select2/js/select2.min.js",
+
+              "src/assets/plugins/raty/custom.raty.js",
+              "src/assets/plugins/raty/jquery.raty.js",
+              "src/assets/plugins/scrollbar/custom-scroll.js",
+              "src/assets/plugins/scrollbar/scrollbar.min.js",
+              "src/assets/plugins/select2/js/select2.min.js",
+
+              "src/assets/plugins/stickynote/sticky.js",
+              "src/assets/plugins/summernote/summernote-bs4.min.js",
+              "src/assets/plugins/sweetalert/sweetalert2.all.min.js",
+              "src/assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js",
+              "src/assets/plugins/timeline/horizontal-timeline.js",
+              "src/assets/plugins/toastr/toastr.js"
 
             ],
             "server": "src/main.server.ts",

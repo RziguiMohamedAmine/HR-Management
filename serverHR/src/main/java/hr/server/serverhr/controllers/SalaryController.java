@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/salaries")
+@RequestMapping("/HrMangement/salaries")
 public class SalaryController {
 
     @Autowired

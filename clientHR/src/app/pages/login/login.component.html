@@ -1,0 +1,72 @@
+<div class="account-page">
+  <div class="main-wrapper">
+    <div class="account-content">
+      <div class="container">
+        <div class="account-logo">
+          <a href="admin-dashboard.html">
+            <img src="assets/img/logo2.png" alt="Dreamguy's Technologies" />
+          </a>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div *ngIf="isLoading" class="loading-overlay">
+          <div class="loading-spinner"></div>
+          <p>Logging in...</p>
+        </div>
+
+        <div class="account-box">
+          <div class="account-wrapper">
+            <h3 class="account-title">Login</h3>
+            <p class="account-subtitle">Access to our dashboard</p>
+
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control"
+                  formControlName="email"
+                  [class.is-invalid]="submitted && f['email'].errors"
+                />
+                <div class="error-message" *ngIf="submitted && f['email'].errors">
+                  {{ getErrorMessage('email') }}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  class="form-control"
+                  formControlName="password"
+                  [class.is-invalid]="submitted && f['password'].errors"
+                />
+                <div class="error-message" *ngIf="submitted && f['password'].errors">
+                  {{ getErrorMessage('password') }}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <button 
+                  type="submit" 
+                  class="btn btn-primary btn-block" 
+                  [disabled]="isLoading"
+                >
+                  {{ isLoading ? 'Logging in...' : 'Login' }}
+                </button>
+              </div>
+
+              <div class="form-group" *ngIf="errorMessage">
+                <div class="alert alert-danger">
+                  {{ errorMessage }}
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

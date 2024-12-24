@@ -373,12 +373,12 @@
             ><img src="assets/img/avatar/avatar-27.jpg" alt="User Image" />
             <span class="status online"></span
           ></span>
-          <span>Admin</span>
+          <span>{{ userDetails?.firstname }} {{ userDetails?.lastname }}</span>
         </a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="profile.html">My Profile</a>
+          <a class="dropdown-item"  [routerLink]="['/employees', userDetails?.id]">My Profile</a>
           <a class="dropdown-item" href="settings.html">Settings</a>
-          <a class="dropdown-item" href="index.html">Logout</a>
+          <a class="dropdown-item" (click)="logout()">Logout</a>
         </div>
       </li>
     </ul>

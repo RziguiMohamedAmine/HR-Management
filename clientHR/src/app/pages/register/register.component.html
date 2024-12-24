@@ -1,0 +1,84 @@
+<body class="account-page">
+    <div class="main-wrapper">
+      <div class="account-content">
+        <div class="container">
+          <div class="account-logo">
+            <a href="admin-dashboard.html"
+              ><img src="assets/img/logo2.png" alt="Dreamguy's Technologies"
+            /></a>
+          </div>
+
+          <div class="account-box">
+            <div class="account-wrapper">
+              <h3 class="account-title">Register</h3>
+              <p class="account-subtitle">Access to our dashboard</p>
+
+              <form 
+                    [formGroup]="form">
+                <div class="input-block mb-4">
+                  <label class="col-form-label">First Name<span class="mandatory">*</span></label>
+                  <input class="form-control" type="text" formControlName="firstname" [ngClass]="{ 'is-invalid': submitted && f['firstname'].errors }"/>
+                  <div *ngIf="submitted && f['firstname'].errors" class="invalid-feedback">
+                    <div *ngIf="f['firstname'].errors['required']">First Name is required</div>
+                    <div *ngIf="f['firstname'].errors['firstname']">First Name is invalid</div>
+                  </div>
+                </div>
+                <div class="input-block mb-4">
+                  <label class="col-form-label">Last Name<span class="mandatory">*</span></label>
+                  <input class="form-control" type="text" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }"/>
+                  <div *ngIf="submitted && f['lastname'].errors" class="invalid-feedback">
+                    <div *ngIf="f['lastname'].errors['required']">Last Name is required</div>
+                    <div *ngIf="f['lastname'].errors['lastname']">Last Name is invalid</div>
+                  </div>
+                </div>
+                <div class="input-block mb-4">
+                  <label class="col-form-label">Email<span class="mandatory">*</span></label>
+                  <input class="form-control" type="text" formControlName="fullname" [ngClass]="{ 'is-invalid': submitted && f['fullname'].errors }"/>
+                  <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                    <div *ngIf="f['email'].errors['required']">Email is required</div>
+                    <div *ngIf="f['email'].errors['email']">Email is invalid</div>
+                  </div>
+                </div>
+                <div class="input-block mb-4">
+                  <label class="col-form-label">Password<span class="mandatory">*</span></label>
+                  <input class="form-control" type="password"
+                  formControlName="password"
+                  class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"/>
+                   <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                    <div *ngIf="f['password'].errors['required']">Password is required</div>
+                    <div *ngIf="f['password'].errors['password']">Password is invalid</div>
+                  </div>
+                </div>
+                <div class="input-block mb-4">
+                  <label class="col-form-label"
+                    >Repeat Password<span class="mandatory">*</span></label>
+                  <input class="form-control" type="password" 
+                  formControlName="confirmPassword"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors }"/>
+                    <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
+                        <div *ngIf="f['confirmPassword'].errors['required']">Confirmed Password is required</div>
+                        <div *ngIf="f['confirmPassword'].errors['matching']">Confirm Password does not match</div>
+                      </div>    
+
+
+
+
+                </div>
+                <div class="input-block mb-4 text-center">
+                  <button class="btn btn-primary account-btn" type="submit">
+                    Register
+                  </button>
+                </div>
+                <div class="account-footer">
+                  <p>Already have an account? <a href="index.html">Login</a></p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>

@@ -9,14 +9,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/HrMangement/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
     private final jwtService jwtservice;
-private final AuthenticationService service;
+    private final AuthenticationService service;
 
-UserDetails userDetails;
+    UserDetails userDetails;
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
 

@@ -3,6 +3,7 @@ package hr.server.serverhr.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
-    private  final AuthenticationProvider authenticationProvider;
+    private final AuthenticationProvider authenticationProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -26,9 +27,11 @@ public class SecurityConfig {
                 .disable()
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                // Configure authentication requests
-                                .antMatchers("/**").permitAll()///auth/**
-                                // Configure all other requests after the root path ("/")
+                                // Allow preflight requests to bypass security
+                                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                // Permit all auth-related endpoints
+                                .antMatchers("/HrMangement/auth/**").permitAll()
+                                // Secure all other endpoints
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement()
@@ -38,8 +41,6 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-
-
-
     }
 }
+

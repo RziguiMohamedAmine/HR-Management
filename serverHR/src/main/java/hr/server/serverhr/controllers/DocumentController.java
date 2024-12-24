@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/Document")
+@RequestMapping("/HrMangement/Document")
 public class DocumentController {
     @Autowired
     private IDocumentService documentService;

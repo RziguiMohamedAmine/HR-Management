@@ -8,6 +8,7 @@ import { EmployeeService } from '../../service/employee.service';
 import { Fonction } from '../../models/fonction';
 import Validation from '../../utils/validation';
 import { ChangeDetectorRef } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-employee-form',
@@ -36,7 +37,7 @@ export class EmployeeFormComponent implements OnInit{
     
   });
   
-
+  fonctions = Object.values(Fonction);
   constructor(
     public employeeService:EmployeeService,
     private formBuilder: FormBuilder, 
@@ -91,7 +92,11 @@ export class EmployeeFormComponent implements OnInit{
   }
 
   getEmployeeDetails(id: number): void {
-    this.employeeService.getEmployeeById(id).subscribe({
+    const token = localStorage.getItem('auth-token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    this.employeeService.getEmployeeById(id,headers).subscribe({
       next: (data) => {
         this.employee = data;
 
@@ -104,7 +109,7 @@ export class EmployeeFormComponent implements OnInit{
           fonction: data.fonction,
           addresse: data.addresse,
           dateNaissance: data.dateNaissance,
-         // image: data.image // This is the image path or URL
+          image: data.image // This is the image path or URL
         });
       },
       error: (err) => console.error('Error fetching employee details:', err),
@@ -135,36 +140,62 @@ export class EmployeeFormComponent implements OnInit{
   }
 
 
-  AddEmployee()
-  {
-      this.employeeService.AddEmployee(this.employee).subscribe(data=>{
-      console.log(data);
-      this.router.navigate(['/employees']);
-    },error=>console.log(error));
+  AddEmployee() {
+    const token = localStorage.getItem('auth-token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
   
+    // Create a copy of the employee object and clean up the image path
+    const employeeToSave = { ...this.employee };
+    
+    // Extract just the filename from the image path
+    if (employeeToSave.image) {
+      employeeToSave.image = employeeToSave.image.split('\\').pop()?.split('/').pop() || '';
+    }
+  
+    this.employeeService.AddEmployee(employeeToSave, headers).subscribe(
+      data => {
+        console.log(data);
+        this.router.navigate(['/employees']);
+        window.location.reload();
+      },
+      error => console.log(error)
+    );
   }
-
   onSubmit(): void {
     this.submitted = true;
     this.cdr.detectChanges();
+    
     if (this.form.invalid) {
       return;
     }
-    console.log(JSON.stringify(this.form.value, null, 2));
+  
     // Map form values to employee model
-    this.employee = { ...this.employee, ...this.form.value };
+    const formValues = { ...this.form.value };
     
+    // Clean up image path before saving
+    if (formValues.image) {
+      formValues.image = formValues.image.split('\\').pop()?.split('/').pop() || '';
+    }
+    
+    this.employee = { ...this.employee, ...formValues };
+  
     if (this.isEditMode) {
       this.updateEmployee();
     } else {
       this.AddEmployee();
     }
+    
     console.log(JSON.stringify(this.form.value, null, 2));
   }
 
   updateEmployee(): void {
-    
-    this.employeeService.ModifierEmployee(this.employee.idEmployee, this.employee).subscribe({
+    const token = localStorage.getItem('auth-token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    this.employeeService.ModifierEmployee(this.employee.idEmployee, this.employee,headers).subscribe({
       next: () => {
         alert('Employee updated successfully!');
         this.router.navigate(['/employees']);

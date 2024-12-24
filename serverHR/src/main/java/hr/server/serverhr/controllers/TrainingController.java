@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/training")
+@RequestMapping("/HrMangement/training")
 @Tag(name = "Training Management")
 public class TrainingController {
 

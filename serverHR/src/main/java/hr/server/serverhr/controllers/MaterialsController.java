@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/Materials")
+@RequestMapping("/HrMangement/Materials")
 @Tag(name = "Materials Management")
 public class MaterialsController {
 

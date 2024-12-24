@@ -8,6 +8,7 @@ import { EmployeeService } from '../../service/employee.service';
 import { Fonction } from '../../models/fonction';
 import Validation from '../../utils/validation';
 import Swal from 'sweetalert2';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-employee-list',
@@ -35,7 +36,11 @@ export class EmployeeListComponent implements OnInit {
 
  
   delete(id: number)
-  {
+  {const token = localStorage.getItem('auth-token');
+  if (token) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -51,18 +56,22 @@ export class EmployeeListComponent implements OnInit {
           'Your file has been deleted.',
           'success'
         )
-        this.employeeService.deleteEmployee(id).subscribe(data=>{
+        this.employeeService.deleteEmployee(id,headers).subscribe(data=>{
           this.getEmployeeList();
         });
       }
     })            
-
+  }
   }
 
 
   AddEmployee()
   {
-      this.employeeService.AddEmployee(this.employee).subscribe(data=>{
+    const token = localStorage.getItem('auth-token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+      this.employeeService.AddEmployee(this.employee,headers).subscribe(data=>{
       console.log(data);
     },error=>console.log(error));
   
@@ -83,11 +92,23 @@ export class EmployeeListComponent implements OnInit {
 
  
   getEmployeeList(): void {
-    // Call the service to get employee data
-    this.employeeService.getEmployees().subscribe((data: Employee[]) => {
-      this.employees = data;
-     
-    });
+    const token = localStorage.getItem('auth-token');
+    if (token) {
+     // console.log(token);
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      });
+      this.employeeService.getEmployees(headers).subscribe(
+        (data: Employee[]) => {
+          this.employees = data;
+        },
+        (error) => {
+          console.error('Error fetching employees:', error);
+        }
+      );
+    } else {
+      console.error('No auth token found!');
+    }
   }
 
 

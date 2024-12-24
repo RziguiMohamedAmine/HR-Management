@@ -5,6 +5,7 @@ import { Attendance } from '../../models/attendance';
 import { SettingsComponent } from '../../components/settings/settings.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-attendance-list',
@@ -39,7 +40,12 @@ export class AttendanceListComponent implements OnInit {
 
   // Fetch attendance data for selected month and year
   fetchAttendanceData(): void {
-    this.attendanceService.getAttendanceByMonthAndYear(this.selectedMonth, this.selectedYear)
+    const token = localStorage.getItem('auth-token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    if(token){
+    this.attendanceService.getAttendanceByMonthAndYear(this.selectedMonth, this.selectedYear,headers)
       .subscribe({
         next: (data: Attendance[]) => {
           this.attendances = data;
@@ -51,6 +57,7 @@ export class AttendanceListComponent implements OnInit {
         }
       });
   }
+}
 
   // Process attendance data for the current month and year
   processAttendanceData(): void {

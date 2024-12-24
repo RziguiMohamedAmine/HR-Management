@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Attendance } from '../models/attendance';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,7 +10,7 @@ export class AttendanceService {
 
   public searchText!: string;
 
-  private baseUrl ="http://localhost:8008/Présence";
+  private baseUrl ="http://localhost:8008/HrMangement/Présence";
   private afficher = "/afficherAllPrésence";
   private ajouter = "/ajouterPrésence";
   private getEmployeeAllAtteandances = "/afficherAllPrésence";
@@ -25,12 +25,12 @@ export class AttendanceService {
 
   }
 
-  getAllPresences():Observable<Attendance[]> {
-    return this.httpClient.get<Attendance[]>(`${this.baseUrl+this.afficher}`);
+  getAllPresences(headers: HttpHeaders):Observable<Attendance[]> {
+    return this.httpClient.get<Attendance[]>(`${this.baseUrl+this.afficher}`,{ headers });
   }
 
-  getAttendanceByMonthAndYear(month: number, year: number): Observable<Attendance[]> {
-    return this.httpClient.get<Attendance[]>(`${this.baseUrl}?year=${year}&month=${month}`);
+  getAttendanceByMonthAndYear(month: number, year: number,headers: HttpHeaders): Observable<Attendance[]> {
+    return this.httpClient.get<Attendance[]>(`${this.baseUrl}?year=${year}&month=${month}`,{ headers });
   }
 
 

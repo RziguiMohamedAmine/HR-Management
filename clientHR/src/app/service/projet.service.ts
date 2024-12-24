@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Project } from '../models/project';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from '../models/employee';
 
@@ -23,34 +23,34 @@ export class ProjetService {
     
    }
 
-   getProjects(): Observable<Project[]> {
-    return this.httpClient.get<Project[]>(`${this.baseUrl+this.afficher}`);
+   getProjects(headers: HttpHeaders): Observable<Project[]> {
+    return this.httpClient.get<Project[]>(`${this.baseUrl+this.afficher}`, { headers });
   }
 
-  AddProject(E:Project):Observable<Object>
+  AddProject(E:Project,headers: HttpHeaders):Observable<Object>
   {
-    return this.httpClient.post(`${this.baseUrl+this.ajouter}`,E);                        
+    return this.httpClient.post(`${this.baseUrl+this.ajouter}`,E,{headers});                        
   }
 
-  getProjectById(id:number):Observable<Project>
+  getProjectById(id:number,headers: HttpHeaders):Observable<Project>
   {
-    return this.httpClient.get<Project>(`${this.baseUrl+this.getById}/${id}`);
+    return this.httpClient.get<Project>(`${this.baseUrl+this.getById}/${id}`,{headers});
   }
 
-  ModifierProject(id:number,p:Project):Observable<Object>
+  ModifierProject(id:number,p:Project,headers: HttpHeaders):Observable<Object>
   {
     p.idProjet = id;
-    return this.httpClient.put<Project>(`${this.baseUrl+this.udpate}`,p);
+    return this.httpClient.put<Project>(`${this.baseUrl+this.udpate}`,p,{headers});
   }
 
-  deleteProject(id:number):Observable<Object>
+  deleteProject(id:number,headers: HttpHeaders):Observable<Object>
   {
-    return this.httpClient.delete(`${this.baseUrl+this.delete}/${id}`);
+    return this.httpClient.delete(`${this.baseUrl+this.delete}/${id}`,{headers});
   }
 
  
-  getEmployees(projectId:number): Observable<Employee[]> {
-    return this.httpClient.get<Employee[]>(`${this.baseUrl}/${projectId}/employees`);
+  getEmployees(projectId:number,headers: HttpHeaders): Observable<Employee[]> {
+    return this.httpClient.get<Employee[]>(`${this.baseUrl}/${projectId}/employees`,{headers});
   }
 
 
